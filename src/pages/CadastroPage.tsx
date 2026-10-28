@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { GRUPOS, segmentoPorValor } from '../conteudo/segmentos';
+import { GRUPOS, noPiloto, segmentoPorValor } from '../conteudo/segmentos';
 import { ENDPOINT_CADASTRO } from '../config';
 
 /**
@@ -23,7 +23,7 @@ const mascaraZap = (v: string) => {
 function validar(c: Campos): Partial<Record<keyof Campos, string>> {
   const e: Partial<Record<keyof Campos, string>> = {};
   if (!c.nome.trim()) e.nome = 'Preencha o seu nome.';
-  if (!c.empresa.trim()) e.empresa = 'Preencha o nome da loja ou do consultório.';
+  if (!c.empresa.trim()) e.empresa = 'Preencha o nome da loja.';
   if (!c.segmento) e.segmento = 'Escolha o tipo de negócio.';
   if (!c.local.trim()) e.local = 'Diga onde fica a loja: galeria, número e andar.';
   if (c.whatsapp.replace(/\D/g, '').length < 10) e.whatsapp = 'Confira o WhatsApp: use DDD e número, ex.: (21) 99999-9999.';
@@ -93,7 +93,7 @@ const CadastroPage: React.FC = () => {
 
           <label className={rotulo}>Seu nome
             <input name="nome" value={c.nome} onChange={muda('nome')} autoComplete="name" maxLength={80} className={campo} {...a11y('nome')} />{err('nome')}</label>
-          <label className={rotulo}>Nome da loja ou consultório
+          <label className={rotulo}>Nome da loja
             <input name="empresa" value={c.empresa} onChange={muda('empresa')} autoComplete="organization" maxLength={80} className={campo} {...a11y('empresa')} />{err('empresa')}</label>
 
           <label className={`${rotulo} sm:col-span-2`}>Tipo de negócio
@@ -105,7 +105,11 @@ const CadastroPage: React.FC = () => {
                 </optgroup>
               ))}
               <option value="outro">Outro tipo de negócio</option>
-            </select>{err('segmento')}</label>
+            </select>{err('segmento')}
+            {c.segmento && (noPiloto(c.segmento)
+              ? (noPiloto(c.segmento)?.restricao && <span className="font-body text-sm font-normal text-off-white/80">{noPiloto(c.segmento)?.restricao}</span>)
+              : <span className="rounded-lg bg-petroleo-light px-3 py-2 font-body text-sm font-normal text-off-white/90">Ainda não estamos produzindo anúncios para esse tipo de negócio. O seu cadastro entra na lista de interesse e avisamos você quando abrir.</span>)}
+          </label>
 
           <label className={`${rotulo} sm:col-span-2`}>Onde fica
             <input name="local" value={c.local} onChange={muda('local')} placeholder="Ex.: Galeria A, loja 112, 1º piso" maxLength={120} className={campo} {...a11y('local')} />{err('local')}</label>

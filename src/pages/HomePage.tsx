@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import TotemNoite, { poster, video } from '../components/TotemNoite';
 import { DICAS, dataPorExtenso } from '../conteudo/dicas';
-import { GRUPOS } from '../conteudo/segmentos';
+import { GRUPOS, PILOTO } from '../conteudo/segmentos';
 import { img } from '../config';
 
 const PASSOS = [
@@ -156,24 +156,26 @@ const HomePage: React.FC = () => {
           <div className="bloco py-20 md:py-28">
             <h2 className="titulo text-[clamp(2.8rem,6vw,5rem)]">Para quem é</h2>
             <p className="mt-5 max-w-[38rem] font-body text-lg text-tinta">
-              Para quem tem loja, consultório ou serviço dentro da galeria, do shopping ou do centro médico e quer ser visto por
+              Para quem tem loja ou serviço dentro da galeria, do shopping ou do centro comercial e quer ser visto por
               quem já está no prédio.
             </p>
             <div className="mt-12 grid gap-12 lg:grid-cols-2">
               <div>
-                <h3 className="font-body text-xl font-bold">Comércio e serviços</h3>
+                <h3 className="font-body text-xl font-bold">Atendemos agora</h3>
+                <p className="mt-2 font-body text-tinta">No lançamento, começamos por estes negócios.</p>
                 <ul className="mt-5 flex flex-wrap gap-2">
-                  {[...GRUPOS[0].segmentos, ...GRUPOS[1].segmentos].map((s) => (
-                    <li key={s.valor} className="rounded-full border border-petroleo/15 bg-white px-4 py-2 font-body text-[15px]">{s.nome}</li>
+                  {PILOTO.map((s) => (
+                    <li key={s.valor} className="rounded-full border-2 border-verde-agua bg-white px-4 py-2 font-body text-[15px]">{s.nome}</li>
                   ))}
                 </ul>
+                <p className="mt-4 font-body text-sm text-tinta">Moda, calçados e eletrônicos: por enquanto, produtos sem marca de outras empresas. Alimentação: sem bebidas alcoólicas.</p>
               </div>
               <div>
-                <h3 className="font-body text-xl font-bold">Saúde e profissões regulamentadas</h3>
-                <p className="mt-2 font-body text-tinta">O portal aplica as regras de publicidade do seu conselho profissional e pede o seu número de registro.</p>
+                <h3 className="font-body text-xl font-bold">Em breve</h3>
+                <p className="mt-2 font-body text-tinta">Clínicas, consultórios e outros segmentos abrem nas próximas fases, com as regras de publicidade de cada conselho. Cadastre-se para entrar na lista de interesse.</p>
                 <ul className="mt-5 flex flex-wrap gap-2">
-                  {GRUPOS[2].segmentos.map((s) => (
-                    <li key={s.valor} className="rounded-full border-2 border-verde-agua bg-white px-4 py-2 font-body text-[15px]">{s.nome}</li>
+                  {GRUPOS[1].segmentos.map((s) => (
+                    <li key={s.valor} className="rounded-full border border-petroleo/15 bg-white/60 px-4 py-2 font-body text-[15px] text-tinta">{s.nome}</li>
                   ))}
                 </ul>
               </div>
