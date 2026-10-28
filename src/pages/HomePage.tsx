@@ -10,7 +10,7 @@ import { GRUPOS } from '../conteudo/segmentos';
 import { img } from '../config';
 
 const PASSOS = [
-  { t: 'Cadastre a sua loja', d: 'Preencha o cadastro. A equipe Retoma libera o seu acesso ao portal.' },
+  { t: 'Crie a sua conta', d: 'Cadastre a loja, crie a sua senha e entre direto no portal.' },
   { t: 'Mande o material', d: 'Fotos do celular, logo, preço, prazo da oferta e onde fica a loja.' },
   { t: 'Aprove a prévia', d: 'A Retoma cria o vídeo. Você assiste no portal, pede ajuste ou aprova.' },
   { t: 'Acompanhe na tela', d: 'O anúncio entra nas telas combinadas e o portal mostra cada exibição.' },
@@ -147,7 +147,7 @@ const HomePage: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <p className="mt-12 max-w-2xl font-body text-off-white/65">Durante o lançamento, a equipe Retoma confere cada cadastro e cada anúncio antes de ir ao ar.</p>
+            <p className="mt-12 max-w-2xl font-body text-off-white/65">O sistema confere as regras do seu ramo em cada anúncio. Nada vai ao ar sem a sua aprovação.</p>
           </div>
         </section>
 

@@ -39,7 +39,7 @@ export const DICAS: Dica[] = [
         '**Uma foto por cor.** Se a camisa tem verde, azul e amarela, mande as três.',
         '**Três ângulos.** Frente, lado e um detalhe (etiqueta, textura, fecho).',
       ] },
-      { tipo: 'p', itens: ['Na dúvida, mande mais fotos do que precisa. A equipe Retoma confere o material antes de produzir.'] },
+      { tipo: 'p', itens: ['Na dúvida, mande mais fotos do que precisa. O motor confere a qualidade da foto antes de produzir.'] },
     ],
   },
   {

@@ -9,8 +9,8 @@ import { ENDPOINT_CADASTRO } from '../config';
  * Cadastro de lojistas. Os nomes dos campos são os que o servidor da Retoma espera em POST /cadastro
  * (plataforma/servidor/vitrine.py). Com ENDPOINT_CADASTRO vazio, roda em modo demonstração e não envia nada.
  */
-type Campos = { nome: string; empresa: string; segmento: string; local: string; whatsapp: string; email: string; registro: string; mensagem: string; aceite: boolean };
-const VAZIO: Campos = { nome: '', empresa: '', segmento: '', local: '', whatsapp: '', email: '', registro: '', mensagem: '', aceite: false };
+type Campos = { nome: string; empresa: string; segmento: string; local: string; whatsapp: string; email: string; registro: string; mensagem: string; senha: string; senha2: string; aceite: boolean };
+const VAZIO: Campos = { nome: '', empresa: '', segmento: '', local: '', whatsapp: '', email: '', registro: '', mensagem: '', senha: '', senha2: '', aceite: false };
 
 const mascaraZap = (v: string) => {
   const d = v.replace(/\D/g, '').slice(0, 11);
@@ -23,14 +23,17 @@ const mascaraZap = (v: string) => {
 function validar(c: Campos): Partial<Record<keyof Campos, string>> {
   const e: Partial<Record<keyof Campos, string>> = {};
   if (!c.nome.trim()) e.nome = 'Preencha o seu nome.';
-  if (!c.empresa.trim()) e.empresa = 'Preencha o nome da loja ou do consultório.';
+  if (!c.empresa.trim()) e.empresa = 'Preencha o nome da loja ou do negócio.';
   if (!c.segmento) e.segmento = 'Escolha o tipo de negócio.';
   if (!c.local.trim()) e.local = 'Diga onde fica a loja: galeria, número e andar.';
   if (c.whatsapp.replace(/\D/g, '').length < 10) e.whatsapp = 'Confira o WhatsApp: use DDD e número, ex.: (21) 99999-9999.';
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c.email.trim())) e.email = 'Confira o e-mail: falta o @ ou o domínio.';
   const s = segmentoPorValor(c.segmento);
   if (s?.pedeRegistro && !c.registro.trim()) e.registro = `Para ${s.nome.toLowerCase()}, informe o registro no conselho (${s.pedeRegistro}).`;
-  if (!c.aceite) e.aceite = 'Marque a autorização para enviarmos o cadastro.';
+  if (c.senha.length < 10) e.senha = 'Crie uma senha com pelo menos 10 caracteres.';
+  else if (new Set(c.senha).size < 4) e.senha = 'Essa senha é fácil de adivinhar. Escolha outra.';
+  if (!e.senha && c.senha !== c.senha2) e.senha2 = 'As duas senhas não são iguais.';
+  if (!c.aceite) e.aceite = 'Marque a autorização para criarmos a sua conta.';
   return e;
 }
 
@@ -66,7 +69,7 @@ const CadastroPage: React.FC = () => {
       setDemo(true);
       navegar('/cadastro/enviado?demo=1');
     }
-    // com servidor configurado, o formulário segue normalmente (POST) e o servidor responde com a página de confirmação
+    // com servidor configurado, o formulário segue normalmente (POST): o servidor cria a conta e abre o portal já logado
   };
 
   const err = (k: keyof Campos) => (erros[k] ? <span className={erroCls} id={`erro-${k}`}>{erros[k]}</span> : null);
@@ -76,13 +79,13 @@ const CadastroPage: React.FC = () => {
     <div className="min-h-screen bg-petroleo">
       <Header />
       <main className="bloco max-w-[860px] pb-24 pt-10">
-        <h1 className="titulo text-[clamp(3rem,7vw,5.2rem)]">Cadastre a sua loja</h1>
+        <h1 className="titulo text-[clamp(3rem,7vw,5.2rem)]">Crie a sua conta</h1>
         <p className="mt-5 max-w-xl font-body text-lg text-off-white/85">
-          Leva dois minutos. A equipe Retoma confere os dados e manda o seu acesso ao portal pelo WhatsApp.
+          Leva dois minutos. Você cria a sua senha e já entra no portal para montar o primeiro anúncio.
         </p>
         {!ENDPOINT_CADASTRO && (
           <p className="mt-6 rounded-xl border-l-4 border-amber bg-petroleo-light px-5 py-4 font-body text-off-white/90">
-            Versão de avaliação: o cadastro ainda não é enviado. Você pode preencher para conferir o formulário.
+            Versão de avaliação: a conta ainda não é criada. Você pode preencher para conferir o formulário.
           </p>
         )}
 
@@ -93,7 +96,7 @@ const CadastroPage: React.FC = () => {
 
           <label className={rotulo}>Seu nome
             <input name="nome" value={c.nome} onChange={muda('nome')} autoComplete="name" maxLength={80} className={campo} {...a11y('nome')} />{err('nome')}</label>
-          <label className={rotulo}>Nome da loja ou consultório
+          <label className={rotulo}>Nome da loja ou do negócio
             <input name="empresa" value={c.empresa} onChange={muda('empresa')} autoComplete="organization" maxLength={80} className={campo} {...a11y('empresa')} />{err('empresa')}</label>
 
           <label className={`${rotulo} sm:col-span-2`}>Tipo de negócio
@@ -121,16 +124,21 @@ const CadastroPage: React.FC = () => {
               <input name="registro" value={c.registro} onChange={muda('registro')} maxLength={60} className={campo} {...a11y('registro')} />{err('registro')}</label>
           )}
 
+          <label className={rotulo}>Crie uma senha <span className="font-normal text-off-white/70">Pelo menos 10 caracteres</span>
+            <input name="senha" type="password" value={c.senha} onChange={muda('senha')} autoComplete="new-password" maxLength={200} className={campo} {...a11y('senha')} />{err('senha')}</label>
+          <label className={rotulo}>Repita a senha
+            <input name="senha2" type="password" value={c.senha2} onChange={muda('senha2')} autoComplete="new-password" maxLength={200} className={campo} {...a11y('senha2')} />{err('senha2')}</label>
+
           <label className={`${rotulo} sm:col-span-2`}>O que você quer anunciar? <span className="font-normal text-off-white/70">Opcional</span>
             <textarea name="mensagem" value={c.mensagem} onChange={muda('mensagem')} rows={3} maxLength={600} className={campo} /></label>
 
           <label className="flex items-start gap-3 font-body text-off-white/90 sm:col-span-2">
             <input type="checkbox" name="aceite" value="1" checked={c.aceite} onChange={muda('aceite')} className="mt-1 h-5 w-5 accent-amber" {...a11y('aceite')} />
-            <span>Autorizo a Retoma a usar estes dados para analisar o meu cadastro e entrar em contato comigo.{err('aceite') && <><br />{err('aceite')}</>}</span>
+            <span>Autorizo a Retoma a usar estes dados para criar a minha conta e entrar em contato comigo.{err('aceite') && <><br />{err('aceite')}</>}</span>
           </label>
 
           <div className="sm:col-span-2">
-            <button className="btn-primario">Enviar cadastro</button>
+            <button className="btn-primario">Criar minha conta</button>
           </div>
         </form>
         <p className="mt-10 font-body text-off-white/70">

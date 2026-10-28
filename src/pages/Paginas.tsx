@@ -21,11 +21,11 @@ export const CadastroEnviadoPage: React.FC = () => {
   const [q] = useSearchParams();
   return (
     <Moldura>
-      <h1 className="titulo text-[clamp(3rem,7vw,5rem)]">Cadastro enviado</h1>
+      <h1 className="titulo text-[clamp(3rem,7vw,5rem)]">Conta criada</h1>
       <p role="status" className="mt-8 rounded-xl border-l-4 border-verde-agua bg-petroleo-light px-5 py-4 font-body text-lg text-off-white">
         {q.get('demo')
-          ? 'Versão de avaliação: o formulário foi validado, mas nada foi enviado.'
-          : 'Recebemos os seus dados. A equipe Retoma confere o cadastro e manda o seu acesso ao portal pelo WhatsApp informado.'}
+          ? 'Versão de avaliação: o formulário foi validado, mas a conta não foi criada.'
+          : 'Entre no portal com o seu e-mail e a senha que você criou.'}
       </p>
       <p className="mt-8 font-body text-lg text-off-white/85">
         Enquanto isso, veja <Link to="/dicas/como-fotografar-seu-produto" className="text-amber underline underline-offset-4">como fotografar o seu produto</Link> para o primeiro anúncio.
