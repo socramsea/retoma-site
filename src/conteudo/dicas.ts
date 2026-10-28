@@ -10,6 +10,22 @@ export interface Dica {
 
 export const DICAS: Dica[] = [
   {
+    slug: 'anuncio-com-personagem',
+    titulo: 'Anúncio com personagem: o seu produto vestido num cenário de cinema',
+    resumo: 'Nos anúncios de 45 segundos, a Retoma pode criar um personagem que usa a sua peça de verdade, num cenário à sua escolha.',
+    data: '2026-10-28',
+    blocos: [
+      { tipo: 'p', itens: ['A partir da foto da sua camisa, vestido ou jaqueta, o motor da Retoma cria um personagem usando exatamente essa peça, com a mesma cor, o mesmo tecido e os mesmos detalhes, andando numa rua à noite, numa praia ao fim da tarde ou num estúdio. É o tipo de filme que antes só marca grande fazia.'] },
+      { tipo: 'ol', itens: [
+        '**Escolha o anúncio de 45 segundos.** É o tempo que dá para mostrar a peça sozinha, depois vestida e, no fim, o preço e o andar da sua loja.',
+        '**Mande fotos boas da peça.** Frente, costas e um detalhe. Quanto mais nítida a foto, mais fiel fica a peça no personagem.',
+        '**Diga o clima que você quer.** "Noite na cidade", "verão na praia", "dia de jogo". O motor monta o cenário a partir disso.',
+        '**Confira na prévia.** Você vê o anúncio antes de ir ao ar e só aprova se a peça estiver igual à sua.',
+      ] },
+      { tipo: 'p', itens: ['**Regras do personagem.** Ele é inventado pela inteligência artificial e o anúncio diz isso na tela. Nunca se parece com uma pessoa real: nada de artista, atleta, jogador ou influenciador. Não usa nome nem número de jogador na camisa de time. Personagens são sempre adultos e aparecem de forma respeitosa. Se a peça é de uma marca que você revende, vale a mesma regra das lojas multimarcas: produto original e declaração no cadastro.'] },
+    ],
+  },
+  {
     slug: 'como-fotografar-seu-produto',
     titulo: 'Como fotografar seu produto com o celular',
     resumo: 'Cinco cuidados que fazem a diferença entre um anúncio comum e um anúncio que faz a pessoa parar.',
@@ -18,7 +34,7 @@ export const DICAS: Dica[] = [
       { tipo: 'p', itens: ['O anúncio parte da sua foto. A tecnologia da Retoma cria luz, cenário e movimento de cinema em volta, mas o produto que aparece na tela é o da sua foto, com a cor de verdade. Por isso a foto conta muito.'] },
       { tipo: 'ol', itens: [
         '**Luz de janela.** Fotografe de dia, perto de uma janela, sem flash. Evite luz amarela de lâmpada.',
-        '**Fundo liso.** Uma parede clara, um lençol esticado ou uma cartolina. Nada atrás do produto.',
+        '**Fundo simples ajuda.** O cenário da foto não vai para a tela: ele é trocado por um cenário de cinema. Mesmo assim, uma parede clara ou um lençol esticado deixam o contorno do produto mais limpo.',
         '**Produto inteiro e esticado.** Roupa no cabide ou estendida, sem dobras; relógio e joia de perto, com o celular firme.',
         '**Uma foto por cor.** Se a camisa tem verde, azul e amarela, mande as três.',
         '**Três ângulos.** Frente, lado e um detalhe (etiqueta, textura, fecho).',
