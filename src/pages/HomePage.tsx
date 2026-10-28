@@ -4,8 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import TotemNoite from '../components/TotemNoite';
-import { AnuncioModa } from '../components/Anuncios';
+import TotemNoite, { poster, video } from '../components/TotemNoite';
 import { DICAS, dataPorExtenso } from '../conteudo/dicas';
 import { GRUPOS } from '../conteudo/segmentos';
 import { img } from '../config';
@@ -25,8 +24,6 @@ const COMPROMISSOS = [
   { t: 'Custo de produção combinado antes', d: 'Nenhum gasto antes de você aprovar o orçamento.' },
   { t: 'Regras do seu ramo respeitadas', d: 'O sistema confere o texto do anúncio conforme o tipo de negócio.' },
 ];
-
-const camisa = 'polygon(30% 0,70% 0,100% 17%,86% 34%,78% 28%,78% 100%,22% 100%,22% 28%,14% 34%,0 17%)';
 
 const HomePage: React.FC = () => {
   const reduzir = useReducedMotion();
@@ -85,30 +82,26 @@ const HomePage: React.FC = () => {
               ))}
             </ol>
 
-            {/* Da foto ao anúncio */}
-            <div className="mt-20 grid items-center gap-10 rounded-3xl bg-petroleo p-8 text-off-white md:grid-cols-[1fr_auto_auto_auto] md:gap-8 md:p-12">
-              <div>
-                <h3 className="titulo text-4xl md:text-5xl">Da foto do celular ao anúncio</h3>
-                <p className="mt-4 max-w-md font-body text-lg text-off-white/85">
-                  O produto que aparece na tela é o da sua foto, com a cor de verdade. A tecnologia da Retoma cria luz, cenário
-                  e movimento em volta, e o preço vem exatamente do que você escreveu.
-                </p>
+            {/* Anúncios de verdade, feitos pelo motor da Retoma */}
+            <div className="mt-20 rounded-3xl bg-petroleo p-8 text-off-white md:p-12">
+              <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+                <div>
+                  <h3 className="titulo text-4xl md:text-5xl">Feito pelo motor da Retoma</h3>
+                  <p className="mt-4 max-w-md font-body text-lg text-off-white/85">
+                    Estes anúncios foram criados pelo próprio motor da Retoma, no formato da tela: vertical, 15 segundos,
+                    sem som, mensagem curta e o nome da loja em destaque.
+                  </p>
+                  <p className="mt-4 font-body text-sm text-off-white/60">Anúncios de demonstração com empresas fictícias.</p>
+                </div>
+                <div className="grid grid-cols-3 gap-3 sm:gap-5">
+                  {['moda-praia', 'coworking', 'otica'].map((n) => (
+                    <div key={n} className="rounded-xl bg-black p-[5px] shadow-2xl ring-1 ring-white/10 sm:p-[7px]">
+                      <video src={video(n)} poster={poster(n)} autoPlay={!reduzir} muted loop playsInline preload="metadata"
+                        className="aspect-[9/16] w-full rounded-[6px] object-cover" aria-label="Anúncio de demonstração feito pelo motor da Retoma" />
+                    </div>
+                  ))}
+                </div>
               </div>
-              <figure className="mx-auto w-[170px] rotate-[-3deg] rounded-xl bg-white p-3 shadow-2xl">
-                <div className="flex h-[200px] items-center justify-center rounded-md bg-[#e9e7e2]">
-                  <div className="w-[60%]" style={{ aspectRatio: '1/1.15', background: '#2e9a62', clipPath: camisa }} />
-                </div>
-                <figcaption className="mt-2 text-center font-body text-sm text-petroleo">Foto do celular</figcaption>
-              </figure>
-              <ArrowRight className="mx-auto rotate-90 text-amber md:rotate-0" size={34} aria-hidden />
-              <figure className="mx-auto">
-                <div className="w-[180px] rounded-xl bg-black p-[7px] shadow-2xl ring-1 ring-white/10">
-                  <div className="relative overflow-hidden rounded-[5px]" style={{ aspectRatio: '9/16', fontSize: 9 }}>
-                    <AnuncioModa />
-                  </div>
-                </div>
-                <figcaption className="mt-2 text-center font-body text-sm text-off-white/80">Na tela da galeria</figcaption>
-              </figure>
             </div>
           </div>
         </section>
